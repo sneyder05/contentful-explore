@@ -6,9 +6,8 @@ import { ContentfulClientApi, EntryCollection } from 'contentful';
 import { ConfigKey } from 'src/config/ConfigKey';
 import { ContentfulProduct, ContentfulProductSkeleton } from 'src/core/contentful/types/ContentProductSkeleton';
 import { CONTENTFUL_CLIENT } from 'src/core/contentful/util/ContenfulConstants';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { Product } from '../entity/Product';
-import { DeletedProductsService } from './DeletedProductsService';
 
 const CONTENTFUL_BATCH_SIZE = 50;
 
@@ -20,7 +19,6 @@ export class SyncProductsService {
     @Inject(CONTENTFUL_CLIENT) private readonly contentfulClient: ContentfulClientApi<any>,
     @InjectRepository(Product) private readonly productRepository: Repository<Product>,
     private readonly configService: ConfigService,
-    private readonly deleteProductsService: DeletedProductsService,
   ) {}
 
   @Cron(CronExpression.EVERY_MINUTE)
@@ -55,7 +53,7 @@ export class SyncProductsService {
   }
 
   private async getDeletedProducts(): Promise<string[]> {
-    const products = await this.deleteProductsService.getAll();
+    const products = await this.productRepository.find({ withDeleted: true, where: { deletedAt: Not(IsNull()) } });
 
     return products.map((product) => product.sku);
   }

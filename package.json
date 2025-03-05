@@ -22,8 +22,8 @@
     "migration:create": "bash -c 'NAME=${1-migration} && MIG_DIR=db/migrations && yarn run typeorm migration:create $MIG_DIR/$NAME'",
     "migration:generate": "yarn run typeorm migration:generate -d ormconfig.ts",
     "migration:run": "yarn build && yarn run typeorm migration:run -d ormconfig.ts",
-    "migration:revert": "yarn run typeorm migration:revert -d ormconfig.ts",
-    "migration:show": "yarn run typeorm migration:show -d ormconfig.ts"
+    "migration:revert": "yarn build && yarn run typeorm migration:revert -d ormconfig.ts",
+    "migration:show": "yarn build && yarn run typeorm migration:show -d ormconfig.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
