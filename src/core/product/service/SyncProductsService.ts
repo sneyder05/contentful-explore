@@ -21,7 +21,7 @@ export class SyncProductsService {
     private readonly configService: ConfigService,
   ) {}
 
-  @Cron(CronExpression.EVERY_MINUTE)
+  @Cron(CronExpression.EVERY_HOUR)
   async syncProducts() {
     this.logger.log('Syncing products...');
 
