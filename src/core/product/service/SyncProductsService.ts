@@ -8,6 +8,7 @@ import { ContentfulProduct, ContentfulProductSkeleton } from 'src/core/contentfu
 import { CONTENTFUL_CLIENT } from 'src/core/contentful/util/ContenfulConstants';
 import { Repository } from 'typeorm';
 import { Product } from '../entity/Product';
+import { DeletedProductsService } from './DeletedProductsService';
 
 const CONTENTFUL_BATCH_SIZE = 50;
 
@@ -17,11 +18,12 @@ export class SyncProductsService {
 
   constructor(
     @Inject(CONTENTFUL_CLIENT) private readonly contentfulClient: ContentfulClientApi<any>,
-    private readonly configService: ConfigService,
     @InjectRepository(Product) private readonly productRepository: Repository<Product>,
+    private readonly configService: ConfigService,
+    private readonly deleteProductsService: DeletedProductsService,
   ) {}
 
-  @Cron(CronExpression.EVERY_HOUR)
+  @Cron(CronExpression.EVERY_MINUTE)
   async syncProducts() {
     this.logger.log('Syncing products...');
 
@@ -32,12 +34,16 @@ export class SyncProductsService {
     const contentType = this.configService.get<string>(ConfigKey.CONTENTFUL_CONTENT_TYPE, 'product');
     let response: EntryCollection<ContentfulProductSkeleton>;
     const items: ContentfulProduct[] = [];
+    const deletedProducts = await this.getDeletedProducts();
+
+    this.logger.debug(`Skipping ${deletedProducts.length} deleted products`);
 
     do {
       response = await this.contentfulClient.getEntries<ContentfulProductSkeleton>({
         content_type: contentType,
         limit: CONTENTFUL_BATCH_SIZE,
         skip: items.length,
+        'fields.sku[nin]': deletedProducts,
       });
 
       items.push(...response.items);
@@ -46,6 +52,12 @@ export class SyncProductsService {
     this.logger.debug(`Fetched ${items.length} products`);
 
     return items;
+  }
+
+  private async getDeletedProducts(): Promise<string[]> {
+    const products = await this.deleteProductsService.getAll();
+
+    return products.map((product) => product.sku);
   }
 
   private async saveProducts(products: ContentfulProduct[]): Promise<void> {
