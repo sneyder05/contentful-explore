@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ConfigKey } from 'src/config/ConfigKey';
+import { LoggerOptions } from 'typeorm';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { ConfigKey } from 'src/config/ConfigKey';
         migrations: ['dist/db/migrations/*.js'],
         synchronize: false,
         migrationsRun: true,
-        logging: configService.get<boolean>('DATABASE_LOGGING', false),
+        logging: configService.get<string>('DATABASE_LOGGING', '').split(',') as LoggerOptions,
       }),
     }),
   ],

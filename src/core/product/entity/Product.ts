@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'product' })
 export class Product {
@@ -25,4 +25,7 @@ export class Product {
 
   @Column()
   stock!: number;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt?: Date;
 }
