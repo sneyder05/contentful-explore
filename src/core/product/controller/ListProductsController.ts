@@ -3,6 +3,7 @@ import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@ne
 import { ListProductsRequestDto } from '../model/ListProductsRequestDto';
 import { ListProductResponseDto } from '../model/ListProductResponseDto';
 import { ListProductsService } from '../service/ListProductsService';
+import { Public } from 'src/decorator/PublicEndpointDecorator';
 
 @Controller('/products')
 @ApiTags('Products')
@@ -10,6 +11,7 @@ export class ListProductsController {
   constructor(private readonly listProductsService: ListProductsService) {}
 
   @Get()
+  @Public()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'List products', operationId: 'listProducts' })
   @ApiOkResponse({ type: ListProductResponseDto, description: 'List of products' })
