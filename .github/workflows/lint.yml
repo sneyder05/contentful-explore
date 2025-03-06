@@ -1,7 +1,6 @@
 name: Check Linter
 
 on:
-  push:
   pull_request:
     types:
       - opened
