@@ -48,7 +48,9 @@ export class SyncProductsService {
       });
 
       items.push(...response.items);
-    } while (response.total > items.length);
+    } while (
+      response.total > items.length
+    );
 
     this.logger.debug(`Fetched ${items.length} products`);
 
