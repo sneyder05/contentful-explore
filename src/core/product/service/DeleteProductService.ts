@@ -21,7 +21,9 @@ export class DeleteProductService {
 
   private async validateProductExists(id: string): Promise<Product> {
     try {
-      return this.getProductService.getById(id);
+      const product = await this.getProductService.getById(id);
+
+      return product;
     } catch {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
