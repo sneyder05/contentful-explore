@@ -3,13 +3,16 @@ import { ConfigService } from '@nestjs/config';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ContentfulClientApi, EntryCollection } from 'contentful';
-import { ConfigKey } from 'src/config/ConfigKey';
-import { ContentfulProduct, ContentfulProductSkeleton } from 'src/core/contentful/types/ContentProductSkeleton';
-import { CONTENTFUL_CLIENT } from 'src/core/contentful/util/ContenfulConstants';
+import { ConfigKey } from '../../../../src/config/ConfigKey';
+import {
+  ContentfulProduct,
+  ContentfulProductSkeleton,
+} from '../../../../src/core/contentful/types/ContentProductSkeleton';
+import { CONTENTFUL_CLIENT } from '../../../../src/core/contentful/util/ContenfulConstants';
 import { IsNull, Not, Repository } from 'typeorm';
 import { Product } from '../entity/Product';
 
-const CONTENTFUL_BATCH_SIZE = 50;
+export const CONTENTFUL_BATCH_SIZE = 50;
 
 @Injectable()
 export class SyncProductsService {

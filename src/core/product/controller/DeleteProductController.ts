@@ -1,7 +1,7 @@
 import { Controller, Delete, HttpCode, HttpStatus, Param } from '@nestjs/common';
 import { ApiNoContentResponse, ApiNotFoundResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DeleteProductService } from '../service/DeleteProductService';
-import { Public } from 'src/decorator/PublicEndpointDecorator';
+import { Public } from '../../../decorator/PublicEndpointDecorator';
 
 @Controller('/products')
 @ApiTags('Products')

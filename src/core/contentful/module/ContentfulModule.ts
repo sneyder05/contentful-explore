@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createClient } from 'contentful';
-import { ConfigKey } from 'src/config/ConfigKey';
+import { ConfigKey } from '../../../../src/config/ConfigKey';
 import { CONTENTFUL_CLIENT } from '../util/ContenfulConstants';
 
 @Module({
