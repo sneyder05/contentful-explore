@@ -3,7 +3,7 @@ import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@ne
 import { ListProductsRequestDto } from '../model/ListProductsRequestDto';
 import { ListProductResponseDto } from '../model/ListProductResponseDto';
 import { ListProductsService } from '../service/ListProductsService';
-import { Public } from 'src/decorator/PublicEndpointDecorator';
+import { Public } from '../../../../src/decorator/PublicEndpointDecorator';
 
 @Controller('/products')
 @ApiTags('Products')

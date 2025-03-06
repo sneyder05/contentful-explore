@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SyncProductsService } from '../service/SyncProductsService';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ContentfulModule } from 'src/core/contentful/module/ContentfulModule';
+import { ContentfulModule } from '../../../../src/core/contentful/module/ContentfulModule';
 import { Product } from '../entity/Product';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
