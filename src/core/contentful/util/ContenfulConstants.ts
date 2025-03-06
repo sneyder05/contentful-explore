@@ -1,0 +1,1 @@
+export const CONTENTFUL_CLIENT = Symbol('CONTENTFUL_CLIENT');
