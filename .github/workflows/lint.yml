@@ -1,4 +1,4 @@
-name: Run Tests
+name: Check Linter
 
 on:
   pull_request:
@@ -8,8 +8,8 @@ on:
       - reopened
 
 jobs:
-  test:
-    name: Run Unit Tests
+  lint:
+    name: Lint Code
     runs-on: ubuntu-latest
 
     steps:
@@ -25,5 +25,5 @@ jobs:
       - name: Install dependencies
         run: npm i
 
-      - name: Run tests
-        run: npm run test:cov
+      - name: Run ESLint
+        run: npm run lint
